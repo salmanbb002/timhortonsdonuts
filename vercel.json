@@ -1,0 +1,27 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/", "has": [{ "type": "host", "value": "www.timhortonsdonuts.com" }], "destination": "https://timhortonsdonuts.com/", "permanent": true },
+    { "source": "/(.*)", "has": [{ "type": "host", "value": "www.timhortonsdonuts.com" }], "destination": "https://timhortonsdonuts.com/$1", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" }
+      ]
+    },
+    {
+      "source": "/img/(.*)",
+      "headers": [ { "key": "Cache-Control", "value": "public, max-age=604800, immutable" } ]
+    },
+    {
+      "source": "/(styles.css|menu.js)",
+      "headers": [ { "key": "Cache-Control", "value": "public, max-age=86400" } ]
+    }
+  ]
+}
