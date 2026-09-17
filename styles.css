@@ -49,9 +49,13 @@ nav a:hover { color: var(--red); }
   text-align: center;
 }
 .hero h1 { margin: 0 0 0.5rem; font-size: 2.1rem; }
+.hero h1 mark { background: none; color: var(--black); font-weight: 900; }
+.hero h1 .year { opacity: 0.85; font-weight: 400; }
 .hero p { margin: 0 auto; max-width: 640px; opacity: 0.95; }
 
 main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+.jumplabel { font-weight: 700; margin-bottom: 0.75rem; }
 
 .section-title {
   font-size: 1.5rem;
@@ -103,14 +107,15 @@ main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
   margin-bottom: 1rem;
 }
 .jumpnav a {
-  background: var(--gray);
-  color: var(--text);
+  background: var(--red);
+  color: var(--white);
   text-decoration: none;
+  font-weight: 600;
   font-size: 0.85rem;
-  padding: 0.35rem 0.7rem;
-  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
 }
-.jumpnav a:hover { background: var(--red); color: var(--white); }
+.jumpnav a:hover { background: var(--red-dark); }
 
 .subnote { color: #555; font-size: 0.9rem; margin: -0.5rem 0 1rem; }
 
@@ -168,6 +173,10 @@ footer .footer-inner {
   flex-wrap: wrap;
   gap: 1.5rem;
   justify-content: space-between;
+}
+footer .footer-guides {
+  flex-basis: 100%;
+  line-height: 2;
 }
 footer a { color: #ddd; text-decoration: none; margin-right: 1rem; }
 footer a:hover { color: var(--red); }

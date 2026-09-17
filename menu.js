@@ -23,7 +23,7 @@ function renderMenu() {
   grid.innerHTML = DONUTS.map(d => `
     <article class="card">
       <div class="card-img"><img src="${d.img}" alt="${d.name}" loading="lazy" width="280" height="280"></div>
-      <h3>${d.name}${d.seasonal ? ' <span class="badge">Limited time</span>' : ''}</h3>
+      <h3><a href="/${d.id}.html">${d.name}</a>${d.seasonal ? ' <span class="badge">Limited time</span>' : ''}</h3>
       <p class="price">$${d.price.toFixed(2)} CAD <span class="cal">${d.calories} cal</span></p>
     </article>
   `).join("");
