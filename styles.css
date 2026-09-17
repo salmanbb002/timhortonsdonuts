@@ -96,6 +96,48 @@ main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
   vertical-align: middle;
 }
 
+.jumpnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.jumpnav a {
+  background: var(--gray);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+}
+.jumpnav a:hover { background: var(--red); color: var(--white); }
+
+.subnote { color: #555; font-size: 0.9rem; margin: -0.5rem 0 1rem; }
+
+.mlist { border-top: 1px solid #e5e5e5; }
+.mrow {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+.mrow .mimg {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--gray);
+}
+.mrow .mimg img { width: 100%; height: 100%; object-fit: cover; }
+.mrow > span:not(.mimg):not(.sizes) { flex: 1 1 auto; }
+.mrow .sizes { color: var(--red-dark); font-weight: 600; text-align: right; white-space: nowrap; flex: 0 0 auto; }
+@media (max-width: 560px) {
+  .mrow { flex-wrap: wrap; }
+  .mrow .sizes { flex-basis: 100%; text-align: left; white-space: normal; padding-left: calc(44px + 0.85rem); }
+}
+
 .faq details {
   border-bottom: 1px solid #e5e5e5;
   padding: 0.85rem 0;

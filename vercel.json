@@ -2,10 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
-  "redirects": [
-    { "source": "/", "has": [{ "type": "host", "value": "www.timhortonsdonuts.com" }], "destination": "https://timhortonsdonuts.com/", "permanent": true },
-    { "source": "/(.*)", "has": [{ "type": "host", "value": "www.timhortonsdonuts.com" }], "destination": "https://timhortonsdonuts.com/$1", "permanent": true }
-  ],
   "headers": [
     {
       "source": "/(.*)",
