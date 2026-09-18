@@ -189,6 +189,64 @@ footer .copy { width: 100%; margin-top: 1rem; color: #888; }
 }
 .page h1 { border-left: 6px solid var(--red); padding-left: 0.75rem; }
 
+.answer-box {
+  background: var(--gray);
+  border-left: 6px solid var(--red);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  font-size: 1.05rem;
+}
+
+.blog-fig { text-align: center; margin: 1.5rem 0; }
+.blog-fig img { max-width: 100%; height: auto; border-radius: 10px; }
+.blog-fig figcaption { font-size: 0.8rem; color: #666; margin-top: 0.5rem; }
+
+.blog-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.95rem;
+}
+.blog-table th, .blog-table td {
+  border: 1px solid #e5e5e5;
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+.blog-table th { background: var(--black); color: var(--white); }
+.blog-table tr:nth-child(even) td { background: var(--gray); }
+
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+.post-card {
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  padding: 1.25rem;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+}
+.post-card .post-meta {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.72rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.6rem;
+}
+.post-card h3 { font-size: 1.1rem; margin: 0 0 0.5rem; }
+.post-card p { font-size: 0.9rem; color: #444; margin: 0 0 0.9rem; }
+.post-card .read-link { margin-top: auto; font-weight: 600; }
+
+.blog-related { border-top: 1px solid #e5e5e5; margin-top: 2rem; padding-top: 1rem; }
+.blog-related a { margin-right: 1rem; line-height: 2; }
+
 @media (max-width: 480px) {
   nav a { margin-left: 0.75rem; font-size: 0.85rem; }
   .hero h1 { font-size: 1.6rem; }
