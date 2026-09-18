@@ -201,6 +201,7 @@ footer .copy { width: 100%; margin-top: 1rem; color: #888; }
 .blog-fig { text-align: center; margin: 1.5rem 0; }
 .blog-fig img { max-width: 100%; height: auto; border-radius: 10px; }
 .blog-fig figcaption { font-size: 0.8rem; color: #666; margin-top: 0.5rem; }
+.blog-fig-full img { display: block; width: 100%; margin: 0 auto; }
 
 .blog-table {
   width: 100%;
