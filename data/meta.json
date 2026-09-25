@@ -3,5 +3,85 @@
     "title": "Apple Fritter Donut at Tim Hortons — Price, Calories",
     "description": "Apple Fritter Donut at Tim Hortons: price, 330 calories, and where it fits on the Donuts menu. See the full donut lineup and compare flavours.",
     "h1": "Apple Fritter Donut"
+  },
+  "index.html": {
+    "title": "Tim Hortons Menu Prices in Canada — Full List, Updated",
+    "description": "Every Tim Hortons Canada menu item with current prices — coffee, donuts, Timbits, breakfast, lunch and more. Calories included for every donut.",
+    "h1": "Every Tim Hortons Menu Item and Price in Canada"
+  },
+  "breakfast-menu.html": {
+    "title": "Tim Hortons Breakfast Menu and Prices — Canada",
+    "description": "The full Tim Hortons breakfast menu with current prices — sandwiches, wraps, hash browns and omelette bites. Check breakfast hours before you go.",
+    "h1": "Tim Hortons Breakfast Menu: Every Item and Price"
+  },
+  "bagel-menu.html": {
+    "title": "Tim Hortons Bagel Menu and Prices — All Flavours",
+    "description": "Every Tim Hortons bagel flavour with current prices — plain, everything, four cheese, sesame seed and more. Compare toppings before ordering.",
+    "h1": "Every Tim Hortons Bagel Flavour and Price"
+  },
+  "donuts-menu.html": {
+    "title": "Tim Hortons Donuts Menu and Prices — with Calories",
+    "description": "Every classic and seasonal Tim Hortons donut with real prices and calories, from Boston Cream to Apple Fritter. Updated as flavours change regularly.",
+    "h1": "Every Tim Hortons Donut, Priced and Ranked by Calories"
+  },
+  "lunch-menu.html": {
+    "title": "Tim Hortons Lunch Menu and Prices — Wraps to Pizza",
+    "description": "The full Tim Hortons lunch menu with current prices — loaded wraps, bowls, flatbread pizza and sandwiches. See what's on the menu this year.",
+    "h1": "Tim Hortons Lunch Menu: Wraps, Bowls and Flatbread"
+  },
+  "muffins-menu.html": {
+    "title": "Tim Hortons Muffins Menu and Prices — All Flavours",
+    "description": "Every Tim Hortons muffin flavour with current prices — chocolate chip, wild blueberry, fruit explosion and more. Compare flavours before buying.",
+    "h1": "Every Tim Hortons Muffin Flavour, Priced"
+  },
+  "timbits-menu.html": {
+    "title": "Tim Hortons Timbits Menu and Prices — Box Sizes",
+    "description": "Every Tim Hortons Timbit flavour and box size priced — 10, 20 and 50-packs plus filled Timbits. Compare flavours before you place your order.",
+    "h1": "Tim Hortons Timbits: Flavours, Box Sizes and Prices"
+  },
+  "wraps-menu.html": {
+    "title": "Tim Hortons Wraps Menu and Prices — Breakfast and Lunch",
+    "description": "Every Tim Hortons wrap with current prices — breakfast wraps and loaded lunch wraps, cilantro lime, habanero and classic chicken, all compared.",
+    "h1": "Every Tim Hortons Wrap, Priced and Compared"
+  },
+  "cookies-menu.html": {
+    "title": "Tim Hortons Cookies Menu and Prices — All Flavours",
+    "description": "Every Tim Hortons cookie with current prices — chocolate chunk, Oreo, Dream Cookies and assorted gift boxes. Compare flavours before you buy.",
+    "h1": "Every Tim Hortons Cookie Flavour, Priced"
+  },
+  "pastries-menu.html": {
+    "title": "Tim Hortons Pastries Menu and Prices — Savoury",
+    "description": "Every Tim Hortons savoury pastry with current prices — spinach and feta, herb and garlic, red pepper and Swiss, and the four cheese twist pastry.",
+    "h1": "Tim Hortons Savoury Pastries: Every Price"
+  },
+  "croissants-menu.html": {
+    "title": "Tim Hortons Croissants Menu and Prices — Sizes",
+    "description": "Every Tim Hortons croissant with current prices — plain, cheese and chocolate. See how each croissant compares to other Tim Hortons bakery picks.",
+    "h1": "Tim Hortons Croissants: Plain, Cheese and Chocolate"
+  },
+  "tim-hortons-hours.html": {
+    "title": "Tim Hortons Hours in Canada — Opening and Closing",
+    "description": "Typical Tim Hortons Canada opening and closing hours, breakfast cutoff time, and how to check exact hours for your local restaurant location.",
+    "h1": "What Time Does Tim Hortons Open and Close?"
+  },
+  "is-tim-hortons-halal.html": {
+    "title": "Is Tim Hortons Halal in Canada? — What We Found",
+    "description": "Is Tim Hortons halal in Canada? What chain-wide certification means, how meat is sourced, and which menu items are pork- and alcohol-free today.",
+    "h1": "Is Tim Hortons Halal Certified in Canada?"
+  },
+  "tim-hortons-app.html": {
+    "title": "Tim Hortons App — Features, Rewards and Ordering",
+    "description": "What the Tim Hortons app offers — mobile ordering, Tims Rewards points tracking, and exclusive app-only deals. See how to get started today.",
+    "h1": "What the Tim Hortons App Can Do"
+  },
+  "gift-card-balance.html": {
+    "title": "Tim Hortons Gift Card Balance — How to Check",
+    "description": "How to check your Tim Hortons gift card balance online, in the app or in-store, plus how to buy one. Checking your balance takes under a minute.",
+    "h1": "How to Check Your Tim Hortons Gift Card Balance"
+  },
+  "original-iced-capp.html": {
+    "title": "Original Iced Capp at Tim Hortons — Price, Sizes",
+    "description": "Original Iced Capp at Tim Hortons: price by size (S/M/L), and how it compares to other Iced Capp flavours. See the full coffee menu for more.",
+    "h1": "Original Iced Capp"
   }
 }
