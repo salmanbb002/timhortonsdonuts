@@ -34,6 +34,12 @@ for p in pages:
         if u and u not in slugs:
             fails.append(f"{p}: broken internal link /{u}")
 
+# Sitemap lists only clean URLs, each backed by a real page.
+for u in re.findall(r"<loc>([^<]*)</loc>", open("sitemap.xml").read()):
+    slug = u.removeprefix(BASE + "/") or "index"
+    if u.endswith(".html") or slug not in slugs:
+        fails.append(f"sitemap.xml: bad <loc> {u}")
+
 if not os.path.exists("menu.js") or ".html" in open("menu.js").read():
     fails.append("menu.js: still builds .html links")
 
