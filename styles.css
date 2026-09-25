@@ -268,3 +268,11 @@ footer .copy { width: 100%; margin-top: 1rem; color: #888; }
   font-size: 0.75rem;
   color: #ccc;
 }
+
+.byline {
+  font-size: 0.9rem;
+  color: #555;
+  border-left: 3px solid var(--red);
+  padding-left: 0.75rem;
+  margin: 1rem 0 1.5rem;
+}

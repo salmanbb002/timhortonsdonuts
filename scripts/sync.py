@@ -16,6 +16,7 @@ import jsonld
 DONUTS = json.load(open("data/donuts.json"))
 CONFIG = json.load(open("data/site-config.json"))
 VERIFIED_DATE = date.fromisoformat(CONFIG["prices_verified_date"])  # the only source for the verified line
+AUTHOR = CONFIG["author"]  # the only source for the author name/bio (About page, bylines, Article JSON-LD)
 
 
 def donut_grid(page, s):
@@ -52,6 +53,38 @@ def disclaimer(page, s):
     )
 
 
+def author_bio(page, s):
+    return f'<h2 id="author">About the author</h2>\n  <p>{html.escape(AUTHOR["bio"])}</p>'
+
+
+def byline(page, s):
+    return (
+        f'<p class="byline"><strong>About the author:</strong> {html.escape(AUTHOR["bio"])} '
+        '<a href="/about#author">More about the author</a></p>'
+    )
+
+
+ARTICLE_AUTHOR = re.compile(r'"author": \{.*?\n      \},', re.S)
+
+
+def article_author(s):
+    """Managed field, not a marker block (comments can't live inside JSON): the Article's author object."""
+    if len(ARTICLE_AUTHOR.findall(s)) != 1:
+        raise ValueError("expected exactly one Article author object")
+    return ARTICLE_AUTHOR.sub(lambda m: (
+        '"author": {\n'
+        '        "@type": "Person",\n'
+        f'        "name": {json.dumps(AUTHOR["name"], ensure_ascii=False)},\n'
+        f'        "url": {json.dumps(AUTHOR["url"])},\n'
+        f'        "description": {json.dumps(AUTHOR["bio"], ensure_ascii=False)}\n'
+        "      },"
+    ), s)
+
+
+def is_article(page, s):
+    return '"@type": "Article"' in s
+
+
 def partial(name):
     return lambda page, s: open(f"data/partials/{name}.html").read().rstrip("\n")
 
@@ -66,6 +99,8 @@ BLOCKS = {
     "JSONLD": (price_page, jsonld.block),
     "VERIFIED": (price_page, verified),
     "DISCLAIMER": (price_page, disclaimer),
+    "AUTHOR": (lambda page, s: page == "about.html", author_bio),
+    "BYLINE": (is_article, byline),
     "HEADER": (lambda page, s: page != "404.html", partial("header")),
     "FOOTER": (lambda page, s: page != "404.html", partial("footer")),
 }
@@ -85,6 +120,8 @@ def render(page, s):
         if not allowed(page, s):
             raise ValueError(f"has {name} markers but shouldn't carry that block")
         s = replace_block(s, name, fn(page, s))
+    if is_article(page, s):
+        s = article_author(s)
     return s
 
 

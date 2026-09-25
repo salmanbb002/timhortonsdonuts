@@ -77,6 +77,10 @@ for p in pages:
         for name in ("HEADER", "FOOTER"):
             if f"SHARED:{name}:START" not in s:
                 fails[f"{name.lower()}-coverage"].append(f"{p}: without SHARED:{name}")
+    if sync.is_article(p, s) and "SHARED:BYLINE:START" not in s:
+        fails["author"].append(f"{p}: Article page without SHARED:BYLINE")
+    if p == "about.html" and "SHARED:AUTHOR:START" not in s:
+        fails["author"].append(f"{p}: About page without SHARED:AUTHOR bio")
     n = s.count('<p class="disclaimer">')
     if sync.price_page(p, s) and n != 1:
         fails["disclaimer-count"].append(f"{p}: {n} disclaimer paragraphs, want 1")
@@ -108,6 +112,13 @@ for p in pages:
         for i in walk(data, "@id"):
             if not (i.startswith(want) or i.startswith(f"{BASE}/#")):
                 fails["jsonld-values"].append(f"{p}: foreign @id {i}")
+        # Article authors are the named Person from data/site-config.json, never an Organization (T10-005).
+        for node in walk(data, "@graph"):
+            for n in node:
+                if n.get("@type") == "Article":
+                    a = n.get("author", {})
+                    if not (isinstance(a, dict) and a.get("@type") == "Person" and a.get("name") == sync.AUTHOR["name"]):
+                        fails["author"].append(f"{p}: Article author is {a!r}, want Person {sync.AUTHOR['name']!r}")
         if "SHARED:JSONLD" not in s:
             continue  # hand-written blog schema: parse + placeholder checks only
         for key in ("price", "lowPrice", "highPrice"):

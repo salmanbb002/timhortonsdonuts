@@ -42,6 +42,11 @@ def place(name, page, s):
             raise ValueError("expected exactly one existing disclaimer paragraph")
         s = OLD_DISCLAIMER.sub("\n", s)
         return after(s, exactly_one(r"<!-- SHARED:VERIFIED:END -->\n", s), f"  {empty(name)}\n")
+    if name == "AUTHOR":
+        m = exactly_one(r"  <p>Found an error\?", s)
+        return s[: m.start()] + f"  {empty(name)}\n" + s[m.start():]
+    if name == "BYLINE":
+        return after(s, exactly_one(r'<div class="page">\n', s), f"  {empty(name)}\n")
     if name in ("HEADER", "FOOTER"):
         tag = name.lower()
         m = exactly_one(rf"<{tag}>.*?</{tag}>", s)
