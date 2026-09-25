@@ -37,15 +37,17 @@ def verified(page, s):
 
 
 def disclaimer(page, s):
-    # Table 6E-audited wording, exactly as the site already had it: homepage/hubs and items that show
-    # calories say "Prices and calories", other item pages say "Prices".
+    # Table 6E-audited wording as the site already had it (homepage/hubs and items that show calories say
+    # "Prices and calories", other items "Prices"), plus the homepage's sourcing and image-rights sentences.
     is_item = jsonld.template_for(page, s) is jsonld.item_page
     what = "Prices" if is_item and 'class="cal"' not in s else "Prices and calories"
     return (
         '<p class="disclaimer">\n'
         "    This is an independent, unofficial guide to the Tim Hortons Canada menu. It is not affiliated with, endorsed by,\n"
         f"    or sponsored by Tim Hortons or Restaurant Brands International. {what} are listed reference estimates\n"
-        '    in CAD, before tax, and vary by location, province and over time. See <a href="/sources">Sources</a> for details.\n'
+        "    in CAD, before tax, and vary by location, province and over time. They are sourced from a public menu reference\n"
+        "    and may not reflect current pricing at every location. Product names and images belong to their respective owners.\n"
+        '    See <a href="/sources">Sources</a> for details.\n'
         "  </p>"
     )
 
