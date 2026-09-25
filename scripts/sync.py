@@ -9,10 +9,13 @@ import html
 import json
 import re
 import sys
+from datetime import date
 
 import jsonld
 
 DONUTS = json.load(open("data/donuts.json"))
+CONFIG = json.load(open("data/site-config.json"))
+VERIFIED_DATE = date.fromisoformat(CONFIG["prices_verified_date"])  # the only source for the verified line
 
 
 def donut_grid(page, s):
@@ -28,10 +31,20 @@ def donut_grid(page, s):
     return "\n" + "\n".join(cards) + "\n    "
 
 
+def verified(page, s):
+    d = VERIFIED_DATE
+    return f'<p class="verified">Prices last verified: {d:%B} {d.day}, {d.year}</p>'
+
+
+def price_page(page, s):
+    return jsonld.template_for(page, s) is not None
+
+
 # block name -> (page may carry it?, renderer). Order matters: JSON-LD reads the stamped donut grid.
 BLOCKS = {
     "DONUT-GRID": (lambda page, s: page in {"index.html", "donuts-menu.html"}, donut_grid),
-    "JSONLD": (lambda page, s: jsonld.template_for(page, s) is not None, jsonld.block),
+    "JSONLD": (price_page, jsonld.block),
+    "VERIFIED": (price_page, verified),
 }
 
 

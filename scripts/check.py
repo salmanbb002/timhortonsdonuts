@@ -3,6 +3,7 @@
 Run from repo root: python3 scripts/check.py
 """
 import collections
+import datetime
 import glob
 import json
 import re
@@ -12,6 +13,10 @@ sys.path.insert(0, "scripts")
 import sync  # noqa: E402
 
 BASE = "https://timhortonsdonuts.com"
+# Page-level blocks every price page must carry (the blog post shows illustrative price cards inside an
+# article and keeps its own cited disclaimer, so it is not a sync.price_page).
+REQUIRED_ON_PRICE_PAGES = ("JSONLD", "VERIFIED")
+DATE_TEXT = re.compile(r"(?:January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}, \d{4}|\d{4}-\d{2}-\d{2}")
 PLACEHOLDERS = ("NOT AVAILABLE", "YYYY", "{{", "[NOT", "fruit-quenchers-menu", "example.com")
 fails = collections.defaultdict(list)
 pages = sorted(glob.glob("*.html"))
@@ -61,6 +66,20 @@ for p in pages:
     if 'id="donut-grid"' in s and "SHARED:DONUT-GRID:START" not in s:
         fails["sync"].append(f"{p}: donut-grid has no SHARED:DONUT-GRID markers")
 
+    # Required shared blocks on price pages.
+    if sync.price_page(p, s):
+        for name in REQUIRED_ON_PRICE_PAGES:
+            if f"SHARED:{name}:START" not in s:
+                fails[f"{name.lower()}-coverage"].append(f"{p}: price page without SHARED:{name}")
+
+    # "Last verified" must come only from data/site-config.json via the VERIFIED block: any verified-date
+    # text outside that block is a hardcoded date. (Inside it, the sync check above catches a stale/edited date.)
+    outside = re.sub(r"<!-- SHARED:VERIFIED:START -->.*?<!-- SHARED:VERIFIED:END -->", "", s, flags=re.S)
+    for m in re.finditer(r"verified", outside, re.I):
+        near = outside[m.start(): m.start() + 60]
+        if DATE_TEXT.search(near):
+            fails["verified-hardcoded"].append(f"{p}: hardcoded verified date {' '.join(near.split())!r}")
+
     # JSON-LD: every block parses; every price page carries one; values trace to the visible page.
     blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', s, re.S)
     if 'class="price"' in s and not blocks:
@@ -89,6 +108,10 @@ for p in pages:
         for v in walk(data, "calories"):
             if v.removesuffix(" cal") not in shown_cals:
                 fails["jsonld-values"].append(f"{p}: calories {v} not shown on page")
+
+# The verified date itself must be a real, non-future date.
+if sync.VERIFIED_DATE > datetime.date.today():
+    fails["verified-date"].append(f"data/site-config.json: prices_verified_date {sync.VERIFIED_DATE} is in the future")
 
 # Sitemap lists only clean URLs, each backed by a real page.
 for u in re.findall(r"<loc>([^<]*)</loc>", open("sitemap.xml").read()):
