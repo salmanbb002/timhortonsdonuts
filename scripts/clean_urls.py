@@ -15,9 +15,9 @@ def clean(m):
 
 
 changed = 0
-for f in sorted(glob.glob("*.html")) + ["menu.js"]:
+for f in sorted(glob.glob("*.html")):
     s = open(f).read()
-    out = URL.sub(clean, s).replace("/${d.id}.html", "/${d.id}")
+    out = URL.sub(clean, s)
     if out != s:
         open(f, "w").write(out)
         changed += 1

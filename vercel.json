@@ -20,7 +20,7 @@
       "headers": [ { "key": "Cache-Control", "value": "public, max-age=604800, immutable" } ]
     },
     {
-      "source": "/(styles.css|menu.js)",
+      "source": "/styles.css",
       "headers": [ { "key": "Cache-Control", "value": "public, max-age=86400" } ]
     }
   ]

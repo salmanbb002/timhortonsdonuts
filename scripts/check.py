@@ -3,7 +3,6 @@
 Run from repo root: python3 scripts/check.py
 """
 import glob
-import os
 import re
 import sys
 
@@ -40,8 +39,19 @@ for u in re.findall(r"<loc>([^<]*)</loc>", open("sitemap.xml").read()):
     if u.endswith(".html") or slug not in slugs:
         fails.append(f"sitemap.xml: bad <loc> {u}")
 
-if not os.path.exists("menu.js") or ".html" in open("menu.js").read():
-    fails.append("menu.js: still builds .html links")
+# Shared blocks match data/ (i.e. scripts/sync.py was run and markers are well-formed).
+sys.path.insert(0, "scripts")
+import sync  # noqa: E402
+
+for p in pages:
+    s = open(p).read()
+    try:
+        if sync.render(p, s) != s:
+            fails.append(f"{p}: out of date, run scripts/sync.py")
+    except ValueError as e:
+        fails.append(f"{p}: {e}")
+    if 'id="donut-grid"></div>' in s:
+        fails.append(f"{p}: empty donut-grid in static HTML")
 
 print("\n".join(fails[:50]))
 print(f"check: {len(pages)} pages, {len(fails)} failures -> {'FAIL' if fails else 'PASS'}")
