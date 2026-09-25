@@ -15,7 +15,7 @@ import sync  # noqa: E402
 BASE = "https://timhortonsdonuts.com"
 # Page-level blocks every price page must carry (the blog post shows illustrative price cards inside an
 # article and keeps its own cited disclaimer, so it is not a sync.price_page).
-REQUIRED_ON_PRICE_PAGES = ("JSONLD", "VERIFIED")
+REQUIRED_ON_PRICE_PAGES = ("JSONLD", "VERIFIED", "DISCLAIMER")
 DATE_TEXT = re.compile(r"(?:January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}, \d{4}|\d{4}-\d{2}-\d{2}")
 PLACEHOLDERS = ("NOT AVAILABLE", "YYYY", "{{", "[NOT", "fruit-quenchers-menu", "example.com")
 fails = collections.defaultdict(list)
@@ -71,6 +71,15 @@ for p in pages:
         for name in REQUIRED_ON_PRICE_PAGES:
             if f"SHARED:{name}:START" not in s:
                 fails[f"{name.lower()}-coverage"].append(f"{p}: price page without SHARED:{name}")
+
+    # Header/footer partials on every page but the deliberately minimal 404; one disclaimer per price page.
+    if p != "404.html":
+        for name in ("HEADER", "FOOTER"):
+            if f"SHARED:{name}:START" not in s:
+                fails[f"{name.lower()}-coverage"].append(f"{p}: without SHARED:{name}")
+    n = s.count('<p class="disclaimer">')
+    if sync.price_page(p, s) and n != 1:
+        fails["disclaimer-count"].append(f"{p}: {n} disclaimer paragraphs, want 1")
 
     # "Last verified" must come only from data/site-config.json via the VERIFIED block: any verified-date
     # text outside that block is a hardcoded date. (Inside it, the sync check above catches a stale/edited date.)

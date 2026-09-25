@@ -69,8 +69,11 @@
 </script><!-- SHARED:JSONLD:END -->
 </head>
 <body>
-<header>
-  <a class="brand" href="/">Tim Hortons<span>Donuts</span></a>
+<!-- SHARED:HEADER:START --><header>
+  <div class="brand-wrap">
+    <a class="brand" href="/">Tim Hortons<span>Donuts</span></a>
+    <p class="header-disclaimer">Unofficial fan guide - not affiliated with Tim Hortons</p>
+  </div>
   <nav>
     <a href="/#hot">Menu</a>
     <a href="/blog">Blog</a>
@@ -78,7 +81,7 @@
     <a href="/sources">Sources</a>
     <a href="/contact">Contact</a>
   </nav>
-</header>
+</header><!-- SHARED:HEADER:END -->
 
 <div class="page">
   <p><a href="/">Full Menu</a> / <a href="/coffee-menu">Iced Capp</a> / Caramel Toffee Iced Capp</p>
@@ -90,19 +93,19 @@
     <p class="price">S $3.99 · M $4.49 · L $4.99 CAD</p>
   </div>
   <!-- SHARED:VERIFIED:START --><p class="verified">Prices last verified: September 26, 2026</p><!-- SHARED:VERIFIED:END -->
+  <!-- SHARED:DISCLAIMER:START --><p class="disclaimer">
+    This is an independent, unofficial guide to the Tim Hortons Canada menu. It is not affiliated with, endorsed by,
+    or sponsored by Tim Hortons or Restaurant Brands International. Prices are listed reference estimates
+    in CAD, before tax, and vary by location, province and over time. See <a href="/sources">Sources</a> for details.
+  </p><!-- SHARED:DISCLAIMER:END -->
 
   <p>A cold, creamy take on Tim Hortons coffee, Caramel Toffee Iced Capp is blended to order rather than poured over ice. Expect a buttery caramel flavour profile true to its name. For the full lineup and prices in this category, see the Iced Capp menu.</p>
 
   <p><a href="/coffee-menu">&larr; See the full Iced Capp menu</a></p>
 
-  <p class="disclaimer">
-    This is an independent, unofficial guide to the Tim Hortons Canada menu. It is not affiliated with, endorsed by,
-    or sponsored by Tim Hortons or Restaurant Brands International. Prices are listed reference estimates
-    in CAD, before tax, and vary by location, province and over time. See <a href="/sources">Sources</a> for details.
-  </p>
 </div>
 
-<footer>
+<!-- SHARED:FOOTER:START --><footer>
   <div class="footer-inner">
     <div class="footer-guides">
       <a href="/coffee-menu">Coffee Menu</a>
@@ -131,7 +134,7 @@
     </div>
     <div class="copy">&copy; <span id="year"></span> TimHortonsDonuts.com — an independent, unofficial guide. Not affiliated with Tim Hortons.</div>
   </div>
-</footer>
+</footer><!-- SHARED:FOOTER:END -->
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

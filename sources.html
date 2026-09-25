@@ -11,8 +11,11 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header>
-  <a class="brand" href="/">Tim Hortons<span>Donuts</span></a>
+<!-- SHARED:HEADER:START --><header>
+  <div class="brand-wrap">
+    <a class="brand" href="/">Tim Hortons<span>Donuts</span></a>
+    <p class="header-disclaimer">Unofficial fan guide - not affiliated with Tim Hortons</p>
+  </div>
   <nav>
     <a href="/#hot">Menu</a>
     <a href="/blog">Blog</a>
@@ -20,7 +23,7 @@
     <a href="/sources">Sources</a>
     <a href="/contact">Contact</a>
   </nav>
-</header>
+</header><!-- SHARED:HEADER:END -->
 <div class="page">
   <h1>Sources</h1>
   <p>Menu item names, listed prices and calorie figures on this site are reference data compiled from public Tim
@@ -35,7 +38,7 @@
   <p>Prices, availability and calorie information can change at any time and can vary by location. Always confirm
   current details with the official Tim Hortons app or your local restaurant before ordering.</p>
 </div>
-<footer>
+<!-- SHARED:FOOTER:START --><footer>
   <div class="footer-inner">
     <div class="footer-guides">
       <a href="/coffee-menu">Coffee Menu</a>
@@ -64,7 +67,7 @@
     </div>
     <div class="copy">&copy; <span id="year"></span> TimHortonsDonuts.com — an independent, unofficial guide. Not affiliated with Tim Hortons.</div>
   </div>
-</footer>
+</footer><!-- SHARED:FOOTER:END -->
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

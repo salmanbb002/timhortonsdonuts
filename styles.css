@@ -259,3 +259,9 @@ footer .copy { width: 100%; margin-top: 1rem; color: #888; }
   color: #555;
   margin: 1rem 0 0.5rem;
 }
+
+.header-disclaimer {
+  margin: 0.15rem 0 0;
+  font-size: 0.75rem;
+  color: #ccc;
+}

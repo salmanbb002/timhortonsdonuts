@@ -58,8 +58,11 @@
 </script><!-- SHARED:JSONLD:END -->
 </head>
 <body>
-<header>
-  <a class="brand" href="/">Tim Hortons<span>Donuts</span></a>
+<!-- SHARED:HEADER:START --><header>
+  <div class="brand-wrap">
+    <a class="brand" href="/">Tim Hortons<span>Donuts</span></a>
+    <p class="header-disclaimer">Unofficial fan guide - not affiliated with Tim Hortons</p>
+  </div>
   <nav>
     <a href="/#hot">Menu</a>
     <a href="/blog">Blog</a>
@@ -67,7 +70,7 @@
     <a href="/sources">Sources</a>
     <a href="/contact">Contact</a>
   </nav>
-</header>
+</header><!-- SHARED:HEADER:END -->
 
 <div class="page">
   <p><a href="/">Full Menu</a> / <a href="/#cookies">Cookies</a> / Dream Cookie with Nutella</p>
@@ -79,19 +82,19 @@
     <p class="price">$2.29 CAD</p>
   </div>
   <!-- SHARED:VERIFIED:START --><p class="verified">Prices last verified: September 26, 2026</p><!-- SHARED:VERIFIED:END -->
+  <!-- SHARED:DISCLAIMER:START --><p class="disclaimer">
+    This is an independent, unofficial guide to the Tim Hortons Canada menu. It is not affiliated with, endorsed by,
+    or sponsored by Tim Hortons or Restaurant Brands International. Prices are listed reference estimates
+    in CAD, before tax, and vary by location, province and over time. See <a href="/sources">Sources</a> for details.
+  </p><!-- SHARED:DISCLAIMER:END -->
 
   <p>Dream Cookie with Nutella is baked fresh in-house, part of the Tim Hortons cookie and treat case. Pricing is listed at $2.29 CAD before tax, and can vary slightly by location and province. For the full lineup and prices in this category, see the Cookies menu.</p>
 
   <p><a href="/#cookies">&larr; See the full Cookies menu</a></p>
 
-  <p class="disclaimer">
-    This is an independent, unofficial guide to the Tim Hortons Canada menu. It is not affiliated with, endorsed by,
-    or sponsored by Tim Hortons or Restaurant Brands International. Prices are listed reference estimates
-    in CAD, before tax, and vary by location, province and over time. See <a href="/sources">Sources</a> for details.
-  </p>
 </div>
 
-<footer>
+<!-- SHARED:FOOTER:START --><footer>
   <div class="footer-inner">
     <div class="footer-guides">
       <a href="/coffee-menu">Coffee Menu</a>
@@ -120,7 +123,7 @@
     </div>
     <div class="copy">&copy; <span id="year"></span> TimHortonsDonuts.com — an independent, unofficial guide. Not affiliated with Tim Hortons.</div>
   </div>
-</footer>
+</footer><!-- SHARED:FOOTER:END -->
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

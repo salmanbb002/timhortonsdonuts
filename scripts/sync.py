@@ -36,6 +36,24 @@ def verified(page, s):
     return f'<p class="verified">Prices last verified: {d:%B} {d.day}, {d.year}</p>'
 
 
+def disclaimer(page, s):
+    # Table 6E-audited wording, exactly as the site already had it: homepage/hubs and items that show
+    # calories say "Prices and calories", other item pages say "Prices".
+    is_item = jsonld.template_for(page, s) is jsonld.item_page
+    what = "Prices" if is_item and 'class="cal"' not in s else "Prices and calories"
+    return (
+        '<p class="disclaimer">\n'
+        "    This is an independent, unofficial guide to the Tim Hortons Canada menu. It is not affiliated with, endorsed by,\n"
+        f"    or sponsored by Tim Hortons or Restaurant Brands International. {what} are listed reference estimates\n"
+        '    in CAD, before tax, and vary by location, province and over time. See <a href="/sources">Sources</a> for details.\n'
+        "  </p>"
+    )
+
+
+def partial(name):
+    return lambda page, s: open(f"data/partials/{name}.html").read().rstrip("\n")
+
+
 def price_page(page, s):
     return jsonld.template_for(page, s) is not None
 
@@ -45,6 +63,9 @@ BLOCKS = {
     "DONUT-GRID": (lambda page, s: page in {"index.html", "donuts-menu.html"}, donut_grid),
     "JSONLD": (price_page, jsonld.block),
     "VERIFIED": (price_page, verified),
+    "DISCLAIMER": (price_page, disclaimer),
+    "HEADER": (lambda page, s: page != "404.html", partial("header")),
+    "FOOTER": (lambda page, s: page != "404.html", partial("footer")),
 }
 
 
