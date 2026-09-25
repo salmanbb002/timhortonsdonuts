@@ -5,6 +5,7 @@ Run from repo root: python3 scripts/check.py
 import collections
 import datetime
 import glob
+import html
 import json
 import re
 import sys
@@ -133,12 +134,34 @@ for p in pages:
 if sync.VERIFIED_DATE > datetime.date.today():
     fails["verified-date"].append(f"data/site-config.json: prices_verified_date {sync.VERIFIED_DATE} is in the future")
 
+# Titles unique sitewide; pages whose meta came from Table 6D (data/meta.json) must match it and fit the
+# length rules. Other pages keep legacy meta (Table 6D never covered them) and are only counted.
+titles, legacy_out = {}, 0
+managed = json.load(open("data/meta.json")) if glob.glob("data/meta.json") else {}
+for p in pages:
+    s = open(p).read()
+    t = html.unescape(re.search(r"<title>(.*?)</title>", s, re.S)[1])
+    m = re.search(r'<meta name="description" content="([^"]*)">', s)
+    d = html.unescape(m[1]) if m else ""
+    if t in titles:
+        fails["meta"].append(f"{p}: duplicate title (also {titles[t]})")
+    titles[t] = p
+    if p in managed:
+        h1 = html.unescape(re.search(r"<h1>(.*?)</h1>", s, re.S)[1])
+        if (t, d, h1) != (managed[p]["title"], managed[p]["description"], managed[p]["h1"]):
+            fails["meta"].append(f"{p}: title/description/H1 differ from data/meta.json")
+        if len(t) > 60 or not 140 <= len(d) <= 155:
+            fails["meta"].append(f"{p}: title {len(t)} / description {len(d)} chars out of spec")
+    elif p != "404.html" and (len(t) > 60 or not 140 <= len(d) <= 155):
+        legacy_out += 1
+
 # Sitemap lists only clean URLs, each backed by a real page.
 for u in re.findall(r"<loc>([^<]*)</loc>", open("sitemap.xml").read()):
     slug = u.removeprefix(BASE + "/") or "index"
     if u.endswith(".html") or slug not in slugs:
         fails["sitemap"].append(f"sitemap.xml: bad <loc> {u}")
 
+print(f"[info] {legacy_out} pages keep legacy meta outside title<=60 / description 140-155 (no Table 6D row)")
 total = sum(map(len, fails.values()))
 for cat, msgs in fails.items():
     print(f"[{cat}] {len(msgs)} failures")
