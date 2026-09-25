@@ -249,6 +249,9 @@ footer .copy { width: 100%; margin-top: 1rem; color: #888; }
 .blog-related a { margin-right: 1rem; line-height: 2; }
 
 @media (max-width: 480px) {
+  header { flex-wrap: wrap; }
+  header nav { width: 100%; margin-top: 0.6rem; }
+  header nav a:first-child { margin-left: 0; }
   nav a { margin-left: 0.75rem; font-size: 0.85rem; }
   .hero h1 { font-size: 1.6rem; }
 }
