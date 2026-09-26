@@ -13,6 +13,13 @@ import re
 
 BASE = "https://timhortonsdonuts.com"
 TIM = {"@type": "Organization", "name": "Tim Hortons"}
+# T10-037: the real-world entity "Tim Hortons" refers to. Byte-identical to the blog post's hand-written
+# Article "about" Organization (check.py asserts the two stay structurally equal).
+TIM_HORTONS_ENTITY = {
+    "@type": "Organization",
+    "name": "Tim Hortons",
+    "sameAs": ["https://www.wikidata.org/wiki/Q175106", "https://en.wikipedia.org/wiki/Tim_Hortons"],
+}
 
 
 def text(fragment):
@@ -70,7 +77,14 @@ def homepage(s):
             "description": "An independent, unofficial fan guide to the Tim Hortons Canada menu. Not affiliated with, "
             "endorsed by, or sponsored by Tim Hortons or Restaurant Brands International.",
         },
-        {"@type": "WebSite", "@id": f"{BASE}/#website", "url": f"{BASE}/", "name": "Tim Hortons Donuts", "publisher": {"@id": org}},
+        {
+            "@type": "WebSite",
+            "@id": f"{BASE}/#website",
+            "url": f"{BASE}/",
+            "name": "Tim Hortons Donuts",
+            "publisher": {"@id": org},
+            "about": [TIM_HORTONS_ENTITY],
+        },
         breadcrumb(f"{BASE}/", [("Home", f"{BASE}/")]),
     ]
 
@@ -94,7 +108,15 @@ def menu_hub(s, url):
     if sum(len(x["hasMenuItem"]) for x in sections) != cards:
         raise ValueError(f"parsed {sum(len(x['hasMenuItem']) for x in sections)} menu items but page shows {cards} prices")
     return [
-        {"@type": "Menu", "@id": f"{url}#menu", "name": name, "url": url, "inLanguage": "en", "hasMenuSection": sections},
+        {
+            "@type": "Menu",
+            "@id": f"{url}#menu",
+            "name": name,
+            "url": url,
+            "inLanguage": "en",
+            "about": [TIM_HORTONS_ENTITY],
+            "hasMenuSection": sections,
+        },
         breadcrumb(url, [("Home", f"{BASE}/"), (name, url)]),
     ]
 

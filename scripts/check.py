@@ -11,6 +11,7 @@ import re
 import sys
 
 sys.path.insert(0, "scripts")
+import jsonld  # noqa: E402
 import sync  # noqa: E402
 
 BASE = "https://timhortonsdonuts.com"
@@ -129,6 +130,42 @@ for p in pages:
         for v in walk(data, "calories"):
             if v.removesuffix(" cal") not in shown_cals:
                 fails["jsonld-values"].append(f"{p}: calories {v} not shown on page")
+
+# T10-037: the Tim Hortons entity (Organization + sameAs). Parsed-JSON comparison: dict equality ignores key
+# order, and string arrays (sameAs) are compared sorted, so reordering can't read as drift.
+def canon(x):
+    if isinstance(x, dict):
+        return {k: canon(v) for k, v in x.items()}
+    if isinstance(x, list):
+        items = [canon(v) for v in x]
+        return sorted(items) if all(isinstance(v, str) for v in items) else items
+    return x
+
+
+want_entity = canon(jsonld.TIM_HORTONS_ENTITY)
+ENTITY_PAGES = {"index.html"} | {p for p in pages if p.endswith("-menu.html") and 'class="hero"' in open(p).read()}
+entity_carriers = set()
+for p in pages:
+    for b in re.findall(r'<script type="application/ld\+json">(.*?)</script>', open(p).read(), re.S):
+        try:
+            data = json.loads(b)
+        except json.JSONDecodeError:
+            continue  # reported under jsonld-parse
+        for about in walk(data, "about"):
+            for e in about if isinstance(about, list) else [about]:
+                if isinstance(e, dict) and e.get("name") == "Tim Hortons":
+                    entity_carriers.add(p)
+                    if canon(e) != want_entity:
+                        fails["entity"].append(f"{p}: Tim Hortons 'about' differs from jsonld.TIM_HORTONS_ENTITY")
+REFERENCE = "are-tim-hortons-donuts-baked-or-fried.html"  # hand-written original the constant was copied from
+for p in sorted(ENTITY_PAGES - entity_carriers):
+    fails["entity"].append(f"{p}: missing Tim Hortons 'about' entity")
+for p in sorted(entity_carriers - ENTITY_PAGES - {REFERENCE}):
+    fails["entity"].append(f"{p}: unexpected Tim Hortons 'about' entity")
+if REFERENCE not in entity_carriers:
+    fails["entity"].append(f"{REFERENCE}: reference Tim Hortons 'about' entity missing")
+if len(ENTITY_PAGES) != 13:
+    fails["entity"].append(f"expected 13 entity pages (homepage + 12 hubs), found {len(ENTITY_PAGES)}")
 
 # The verified date itself must be a real, non-future date.
 if sync.VERIFIED_DATE > datetime.date.today():
