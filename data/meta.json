@@ -93,5 +93,10 @@
     "title": "Tim Hortons Sandwiches Menu and Prices — Breakfast",
     "description": "Every Tim Hortons breakfast sandwich with current prices — bacon, sausage, egg and cheese, and the Farmer's Breakfast Sandwich. See the full menu.",
     "h1": "Tim Hortons Breakfast Sandwiches: Every Price"
+  },
+  "french-vanilla.html": {
+    "title": "French Vanilla at Tim Hortons — Price",
+    "description": "French Vanilla at Tim Hortons: price by size (S/M/L/XL), and where it sits in the full hot beverages lineup. See the complete coffee menu for more.",
+    "h1": "French Vanilla"
   }
 }
