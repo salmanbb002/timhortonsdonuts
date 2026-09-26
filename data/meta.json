@@ -83,5 +83,15 @@
     "title": "Original Iced Capp at Tim Hortons — Price, Sizes",
     "description": "Original Iced Capp at Tim Hortons: price by size (S/M/L), and how it compares to other Iced Capp flavours. See the full coffee menu for more.",
     "h1": "Original Iced Capp"
+  },
+  "coffee-menu.html": {
+    "title": "Tim Hortons Coffee Menu and Prices — Sizes",
+    "description": "Tim Hortons coffee menu with current prices for every size — brewed coffee, lattes, Iced Capp, cold brew and more. Compare sizes before ordering.",
+    "h1": "Tim Hortons Coffee Menu: Prices by Size"
+  },
+  "sandwiches-menu.html": {
+    "title": "Tim Hortons Sandwiches Menu and Prices — Breakfast",
+    "description": "Every Tim Hortons breakfast sandwich with current prices — bacon, sausage, egg and cheese, and the Farmer's Breakfast Sandwich. See the full menu.",
+    "h1": "Tim Hortons Breakfast Sandwiches: Every Price"
   }
 }
