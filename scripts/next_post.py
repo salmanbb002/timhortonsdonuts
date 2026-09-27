@@ -29,6 +29,8 @@ held = [r for r in rows if not r["done"] and r["hold"]]
 queue = [r for r in rows if not r["done"] and not r["hold"]]
 for r in held:
     print(f"HOLD wk {r['Week']}: /{r['slug']} - {r['Seasonal Trigger']} (publish as evergreen, skip, or delay?)")
+    if r.get("Cannibalisation Note"):
+        print(f"  cannibalisation guard: {r['Cannibalisation Note']}")
 if not queue:
     sys.exit("No unwritten blog posts left in the calendar.")
 
@@ -36,8 +38,10 @@ r = queue[0]
 print(f"\nNEXT BLOG POST - week {r['Week']}, planned {r['Publish Date']}")
 for key in ("Working Title", "Target URL", "Primary Keyword", "Volume", "KD%", "Search Intent", "Word Count Target",
             "Required Sections (in order)", "Schema Types", "3 Internal Links IN (source page — anchor text)",
-            "Pages This Links OUT To", "SERP Feature Targeted", "Seasonal Trigger", "Priority"):
-    print(f"  {key}: {r[key]}")
+            "Pages This Links OUT To", "SERP Feature Targeted", "Seasonal Trigger", "Priority",
+            "Status", "Cannibalisation Note"):
+    if r.get(key):
+        print(f"  {key}: {r[key]}")
 print("\nAfter that:")
 for r in queue[1:4]:
     print(f"  wk {r['Week']:>2}  {r['Publish Date']}  /{r['slug']}  ({r['Primary Keyword']}, {r['Volume']}/mo)")
