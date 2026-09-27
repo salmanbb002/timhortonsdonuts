@@ -5,6 +5,7 @@ Stamps a block wherever its markers are; fails (exit 1) on duplicated markers or
 that shouldn't carry the block. Which pages MUST carry which block is enforced by scripts/check.py.
 """
 import glob
+import hashlib
 import html
 import json
 import re
@@ -82,6 +83,18 @@ def article_author(s):
     ), s)
 
 
+STYLESHEET = re.compile(r'<link rel="stylesheet" href="[^"]*styles\.css[^"]*">')
+
+
+def stylesheet(s):
+    """Managed field: /styles.css?v=<content hash>. styles.css is cached for a day (vercel.json), so an unversioned
+    URL let browsers pair freshly deployed HTML with yesterday's CSS."""
+    if len(STYLESHEET.findall(s)) != 1:
+        raise ValueError("expected exactly one styles.css <link>")
+    v = hashlib.sha256(open("styles.css", "rb").read()).hexdigest()[:10]
+    return STYLESHEET.sub(f'<link rel="stylesheet" href="/styles.css?v={v}">', s)
+
+
 def is_article(page, s):
     return '"@type": "Article"' in s
 
@@ -125,7 +138,7 @@ def render(page, s):
         s = replace_block(s, name, fn(page, s))
     if is_article(page, s):
         s = article_author(s)
-    return s
+    return stylesheet(s)
 
 
 if __name__ == "__main__":

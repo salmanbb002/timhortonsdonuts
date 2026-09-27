@@ -248,10 +248,12 @@ footer .copy { width: 100%; margin-top: 1rem; color: #888; }
 .blog-related { border-top: 1px solid #e5e5e5; margin-top: 2rem; padding-top: 1rem; }
 .blog-related a { margin-right: 1rem; line-height: 2; }
 
-@media (max-width: 480px) {
+/* Stack the nav under the brand once the one-row header no longer fits (~620px). */
+@media (max-width: 660px) {
   header { flex-wrap: wrap; }
   header nav { width: 100%; margin-top: 0.6rem; }
-  header nav a:first-child { margin-left: 0; }
+}
+@media (max-width: 480px) {
   nav a { margin-left: 0.75rem; font-size: 0.85rem; }
   .hero h1 { font-size: 1.6rem; }
 }
@@ -279,11 +281,17 @@ footer .copy { width: 100%; margin-top: 1rem; color: #888; }
 
 /* Header "Menu" dropdown (T10-040) */
 header { position: relative; }
+/* Header nav is a real flex row: <details> is block-level by default and must not rely on inline flow. */
+header nav { display: flex; align-items: center; flex-wrap: wrap; gap: 0.35rem 1.25rem; }
+header nav a { margin-left: 0; }
 .nav-menu { position: relative; display: inline-block; }
 .nav-menu-btn { list-style: none; }
 .nav-menu-btn::-webkit-details-marker { display: none; }
 .nav-menu-btn::marker { content: ""; }
 .nav-menu-btn {
+  display: inline-flex;   /* not list-item: no marker box is generated at all */
+  align-items: center;
+  gap: 0.3em;             /* flex trims the space in ::after's " \25BE" */
   background: none;
   border: 0;
   padding: 0;
@@ -314,6 +322,7 @@ header { position: relative; }
   .nav-menu { position: static; }
   .nav-menu-list { left: 0; right: 0; min-width: 0; border-radius: 0; padding: 0.5rem 1.5rem 0.75rem;
                    display: grid; grid-template-columns: 1fr 1fr; }
+  header nav { gap: 0.35rem 0.75rem; }
   .nav-menu-btn { font-size: 0.85rem; }
   .nav-menu-list a { padding: 0.35rem 0; font-size: 0.85rem; }
 }
