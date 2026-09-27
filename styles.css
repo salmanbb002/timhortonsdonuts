@@ -276,3 +276,42 @@ footer .copy { width: 100%; margin-top: 1rem; color: #888; }
   padding-left: 0.75rem;
   margin: 1rem 0 1.5rem;
 }
+
+/* Header "Menu" dropdown (T10-040) */
+header { position: relative; }
+.nav-menu { position: relative; display: inline-block; }
+.nav-menu-btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--white);
+  font: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+.nav-menu-btn::after { content: " \25BE"; }
+.nav-menu-btn:hover, .nav-menu-btn[aria-expanded="true"] { color: var(--red); }
+.nav-menu-btn:focus-visible, .nav-menu-list a:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
+.nav-menu-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 20;
+  min-width: 13rem;
+  margin: 0;
+  padding: 0.75rem 0 0.5rem;
+  list-style: none;
+  background: var(--black);
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+.nav-menu-list[hidden] { display: none; }
+.nav-menu-list a { display: block; margin: 0; padding: 0.4rem 1rem; font-size: 0.9rem; }
+@media (max-width: 480px) {
+  /* Dropdown drops as a full-width panel under the header instead of a narrow flyout. */
+  .nav-menu { position: static; }
+  .nav-menu-list { left: 0; right: 0; min-width: 0; border-radius: 0; padding: 0.5rem 1.5rem 0.75rem;
+                   display: grid; grid-template-columns: 1fr 1fr; }
+  .nav-menu-btn { font-size: 0.85rem; }
+  .nav-menu-list a { padding: 0.35rem 0; font-size: 0.85rem; }
+}
