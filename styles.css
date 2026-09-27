@@ -217,6 +217,10 @@ footer .copy { width: 100%; margin-top: 1rem; color: #888; }
 }
 .blog-table th { background: var(--black); color: var(--white); }
 .blog-table tr:nth-child(even) td { background: var(--gray); }
+/* Wide tables scroll inside their own box on phones instead of widening the page. */
+@media (max-width: 660px) {
+  .blog-table { display: block; overflow-x: auto; font-size: 0.875rem; }
+}
 
 .post-grid {
   display: grid;
