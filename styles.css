@@ -280,6 +280,9 @@ footer .copy { width: 100%; margin-top: 1rem; color: #888; }
 /* Header "Menu" dropdown (T10-040) */
 header { position: relative; }
 .nav-menu { position: relative; display: inline-block; }
+.nav-menu-btn { list-style: none; }
+.nav-menu-btn::-webkit-details-marker { display: none; }
+.nav-menu-btn::marker { content: ""; }
 .nav-menu-btn {
   background: none;
   border: 0;
@@ -290,7 +293,7 @@ header { position: relative; }
   cursor: pointer;
 }
 .nav-menu-btn::after { content: " \25BE"; }
-.nav-menu-btn:hover, .nav-menu-btn[aria-expanded="true"] { color: var(--red); }
+.nav-menu-btn:hover, .nav-menu[open] > .nav-menu-btn { color: var(--red); }
 .nav-menu-btn:focus-visible, .nav-menu-list a:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
 .nav-menu-list {
   position: absolute;
@@ -305,7 +308,6 @@ header { position: relative; }
   border-radius: 0 0 8px 8px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
-.nav-menu-list[hidden] { display: none; }
 .nav-menu-list a { display: block; margin: 0; padding: 0.4rem 1rem; font-size: 0.9rem; }
 @media (max-width: 480px) {
   /* Dropdown drops as a full-width panel under the header instead of a narrow flyout. */

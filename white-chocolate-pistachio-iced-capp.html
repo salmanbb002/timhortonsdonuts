@@ -75,9 +75,9 @@
     <p class="header-disclaimer">Unofficial fan guide - not affiliated with Tim Hortons</p>
   </div>
   <nav aria-label="Main">
-    <div class="nav-menu">
-      <button type="button" class="nav-menu-btn" aria-expanded="false" aria-controls="nav-menu-list">Menu</button>
-      <ul id="nav-menu-list" class="nav-menu-list" hidden>
+    <details class="nav-menu">
+      <summary class="nav-menu-btn">Menu</summary>
+      <ul class="nav-menu-list">
         <li><a href="/breakfast-menu">Breakfast Menu</a></li>
         <li><a href="/donuts-menu">Donuts Menu</a></li>
         <li><a href="/coffee-menu">Coffee Menu</a></li>
@@ -91,35 +91,36 @@
         <li><a href="/croissants-menu">Croissants Menu</a></li>
         <li><a href="/pastries-menu">Pastries Menu</a></li>
       </ul>
-    </div>
+    </details>
     <a href="/tim-hortons-hours">Hours</a>
     <a href="/gift-card-balance">Gift Card Balance</a>
     <a href="/blog">Blog</a>
   </nav>
   <script>
   (function () {
-    // Disclosure nav: button toggles the list; Arrow keys move, Escape closes and returns focus.
-    var btn = document.querySelector(".nav-menu-btn"), list = document.getElementById("nav-menu-list");
-    var wrap = btn.parentNode, hoverOpen = false;
-    function set(open) { btn.setAttribute("aria-expanded", open ? "true" : "false"); list.hidden = !open; }
-    btn.addEventListener("click", function () {
-      if (hoverOpen) { hoverOpen = false; set(true); return; }
-      set(list.hidden);
+    // Progressive enhancement only: <details>/<summary> already opens/closes by click, tap, Enter and Space
+    // with no JS. This adds hover-open (hover devices), Escape, click-outside, and Arrow-key movement.
+    var menu = document.querySelector("details.nav-menu");
+    if (!menu) return;
+    var summary = menu.querySelector("summary"), hoverOpen = false;
+    function close(refocus) { menu.open = false; if (refocus) summary.focus(); }
+    summary.addEventListener("click", function (e) {
+      if (hoverOpen) { hoverOpen = false; e.preventDefault(); menu.open = true; }  // click after hover keeps it open
     });
-    wrap.addEventListener("keydown", function (e) {
-      var links = Array.prototype.slice.call(list.querySelectorAll("a")), i = links.indexOf(document.activeElement);
-      if (e.key === "Escape" && !list.hidden) { set(false); btn.focus(); e.preventDefault(); }
+    menu.addEventListener("keydown", function (e) {
+      var links = Array.prototype.slice.call(menu.querySelectorAll("a")), i = links.indexOf(document.activeElement);
+      if (e.key === "Escape" && menu.open) { close(true); e.preventDefault(); }
       else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-        set(true);
+        menu.open = true;
         var n = e.key === "ArrowDown" ? (i + 1) % links.length : (i <= 0 ? links.length - 1 : i - 1);
         links[n].focus(); e.preventDefault();
       }
     });
-    wrap.addEventListener("focusout", function (e) { if (!wrap.contains(e.relatedTarget)) set(false); });
-    document.addEventListener("click", function (e) { if (!wrap.contains(e.target)) set(false); });
+    menu.addEventListener("focusout", function (e) { if (!menu.contains(e.relatedTarget)) close(false); });
+    document.addEventListener("click", function (e) { if (!menu.contains(e.target)) close(false); });
     if (window.matchMedia("(hover: hover)").matches) {
-      wrap.addEventListener("mouseenter", function () { hoverOpen = true; set(true); });
-      wrap.addEventListener("mouseleave", function () { hoverOpen = false; set(false); });
+      menu.addEventListener("mouseenter", function () { hoverOpen = true; menu.open = true; });
+      menu.addEventListener("mouseleave", function () { hoverOpen = false; menu.open = false; });
     }
   })();
   </script>
