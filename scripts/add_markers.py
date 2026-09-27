@@ -47,6 +47,12 @@ def place(name, page, s):
         return s[: m.start()] + f"  {empty(name)}\n" + s[m.start():]
     if name == "BYLINE":
         return after(s, exactly_one(r'<div class="page">\n', s), f"  {empty(name)}\n")
+    if name == "QUENCHER":
+        # Replace the old one-paragraph template copy with the generated block.
+        m = exactly_one(r'  <p>[^<]*is a fruit-based cold drink from the Quenchers lineup.*?</p>\n', s)
+        return s[: m.start()] + f"  {empty(name)}\n" + s[m.end():]
+    if name == "QUENCHER-FACTS":
+        return after(s, exactly_one(r"<!-- SHARED:QUENCHER:END -->\n", s), f"  {empty(name)}\n")
     if name in ("HEADER", "FOOTER"):
         tag = name.lower()
         m = exactly_one(rf"<{tag}>.*?</{tag}>", s)

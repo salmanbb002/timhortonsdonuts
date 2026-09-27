@@ -12,6 +12,7 @@ import sys
 from datetime import date
 
 import jsonld
+import quencher
 
 DONUTS = json.load(open("data/donuts.json"))
 CONFIG = json.load(open("data/site-config.json"))
@@ -101,6 +102,8 @@ BLOCKS = {
     "DISCLAIMER": (price_page, disclaimer),
     "AUTHOR": (lambda page, s: page == "about.html", author_bio),
     "BYLINE": (is_article, byline),
+    "QUENCHER": (quencher.is_quencher, quencher.quencher),
+    "QUENCHER-FACTS": (quencher.is_quencher, quencher.quencher_facts),
     "HEADER": (lambda page, s: page != "404.html", partial("header")),
     "FOOTER": (lambda page, s: page != "404.html", partial("footer")),
 }

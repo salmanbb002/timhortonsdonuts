@@ -12,6 +12,7 @@ import sys
 
 sys.path.insert(0, "scripts")
 import jsonld  # noqa: E402
+import quencher  # noqa: E402
 import sync  # noqa: E402
 
 BASE = "https://timhortonsdonuts.com"
@@ -86,6 +87,17 @@ for p in pages:
     n = s.count('<p class="disclaimer">')
     if sync.price_page(p, s) and n != 1:
         fails["disclaimer-count"].append(f"{p}: {n} disclaimer paragraphs, want 1")
+
+    # T10-003: the 18 Fruit Quencher pages carry both generated blocks; the 2021 CMO quote is scoped to the
+    # two flavours that release launched (Peach, Strawberry Watermelon), so it may appear nowhere else.
+    if quencher.is_quencher(p):
+        for name in ("QUENCHER", "QUENCHER-FACTS"):
+            if f"SHARED:{name}:START" not in s:
+                fails["quencher"].append(f"{p}: Quencher page without SHARED:{name}")
+    cmo = "Hope Bagozzi" in s
+    should = quencher.is_quencher(p) and quencher.PAGE.match(p)[1] in quencher.RELEASE_FLAVOURS
+    if cmo != should:
+        fails["quencher"].append(f"{p}: CMO quote {'present' if cmo else 'missing'}, expected {'on' if should else 'off'}")
 
     # "Last verified" must come only from data/site-config.json via the VERIFIED block: any verified-date
     # text outside that block is a hardcoded date. (Inside it, the sync check above catches a stale/edited date.)
