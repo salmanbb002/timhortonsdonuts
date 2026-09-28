@@ -152,7 +152,7 @@ def item_page(s, url):
 def template_for(page, s):
     if page == "index.html":
         return homepage
-    if page.endswith("-menu.html") and 'class="hero"' in s:
+    if page.endswith("-menu.html") and 'class="hero"' in s and '"@type": "Article"' not in s:  # blog posts can end in -menu
         return menu_hub
     if '<div class="page">' in s and s.count('<p class="price">') == 1:
         return item_page

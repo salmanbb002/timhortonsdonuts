@@ -155,7 +155,7 @@ def canon(x):
 
 
 want_entity = canon(jsonld.TIM_HORTONS_ENTITY)
-ENTITY_PAGES = {"index.html"} | {p for p in pages if p.endswith("-menu.html") and 'class="hero"' in open(p).read()}
+ENTITY_PAGES = {"index.html"} | {p for p in pages if jsonld.template_for(p, open(p).read()) is jsonld.menu_hub}
 entity_carriers = set()
 for p in pages:
     for b in re.findall(r'<script type="application/ld\+json">(.*?)</script>', open(p).read(), re.S):
